@@ -43,7 +43,7 @@ public class UpdateLoanTransactionCommand : IRequest<UpdatedLoanTransactionRespo
             loanTransaction = _mapper.Map(request, loanTransaction);
 
             await _loanTransactionRepository.UpdateAsync(loanTransaction!);
-
+            await _loanTransactionRepository.DeleteAsync(loanTransaction!,true);
             UpdatedLoanTransactionResponse response = _mapper.Map<UpdatedLoanTransactionResponse>(loanTransaction);
             return response;
         }

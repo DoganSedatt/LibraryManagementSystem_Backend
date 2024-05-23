@@ -7,6 +7,7 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Books.Queries.GetBookByCategoryId;
+using Application.Features.Rezervations.Queries.GetListReservationByMemberId;
 
 namespace WebAPI.Controllers;
 
@@ -55,7 +56,7 @@ public class RezervationsController : BaseController
     [HttpGet("getreservationsbymemberid")]
     public async Task<IActionResult> GetListReservationByMemberId([FromQuery] PageRequest pageRequest, Guid memberId)
     {
-        GetListRezervationQuery query = new() { PageRequest = pageRequest, MemberId = memberId };
+        GetListReservationByMemberId query = new() { PageRequest = pageRequest, MemberId = memberId };
         var result = await Mediator.Send(query);
         return Ok(result);
     }

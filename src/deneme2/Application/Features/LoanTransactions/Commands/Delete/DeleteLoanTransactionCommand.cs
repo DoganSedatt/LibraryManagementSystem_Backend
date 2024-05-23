@@ -37,7 +37,7 @@ public class DeleteLoanTransactionCommand : IRequest<DeletedLoanTransactionRespo
             LoanTransaction? loanTransaction = await _loanTransactionRepository.GetAsync(predicate: lt => lt.Id == request.Id, cancellationToken: cancellationToken);
             await _loanTransactionBusinessRules.LoanTransactionShouldExistWhenSelected(loanTransaction);
 
-            await _loanTransactionRepository.DeleteAsync(loanTransaction!);
+            await _loanTransactionRepository.DeleteAsync(loanTransaction!,true);
 
             DeletedLoanTransactionResponse response = _mapper.Map<DeletedLoanTransactionResponse>(loanTransaction);
             return response;

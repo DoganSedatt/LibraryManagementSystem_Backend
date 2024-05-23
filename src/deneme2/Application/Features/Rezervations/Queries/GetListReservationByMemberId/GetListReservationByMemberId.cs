@@ -30,8 +30,8 @@ public class GetListReservationByMemberId : IRequest<GetListResponse<GetListReze
         private readonly IRezervationRepository _rezervationRepository;
         public GetListReservationByMemberIdHandler(IRezervationRepository rezervationRepository, IMapper mapper)
         {
-            rezervationRepository = _rezervationRepository;
-            mapper = _mapper;
+            _rezervationRepository = rezervationRepository;
+            _mapper = mapper;
         }
         public async Task<GetListResponse<GetListRezervationListItemDto>> Handle(
             GetListReservationByMemberId request,
