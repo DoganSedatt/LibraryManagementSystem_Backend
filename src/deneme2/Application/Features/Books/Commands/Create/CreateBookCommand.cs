@@ -59,8 +59,8 @@ public class CreateBookCommand : IRequest<CreatedBookResponse>, ICacheRemoverReq
 
         public async Task<CreatedBookResponse> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            
-            
+
+            await _bookBusinessRules.BookShouldBeNotExists(request.Name);
             Book book = _mapper.Map<Book>(request);
             
             await _bookRepository.AddAsync(book);

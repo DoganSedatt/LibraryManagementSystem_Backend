@@ -4,6 +4,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using Application.Features.Books.Constants;
 
 namespace Application.Features.Categories.Rules;
 
@@ -29,7 +30,12 @@ public class CategoryBusinessRules : BaseBusinessRules
         if (category == null)
             await throwBusinessException(CategoriesBusinessMessages.CategoryNotExists);
     }
-
+    public async Task CategoryShouldBeNotExists(string categoryName)
+    {
+        bool doesExists = await _categoryRepository.AnyAsync(predicate: u => u.CategoryName == categoryName);
+        if (doesExists)
+            await throwBusinessException(CategoriesBusinessMessages.CategoryAlreadyExist);
+    }
     public async Task CategoryIdShouldExistWhenSelected(Guid id, CancellationToken cancellationToken)
     {
         Category? category = await _categoryRepository.GetAsync(

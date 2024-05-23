@@ -33,6 +33,7 @@ public class CreatePublisherCommand : IRequest<CreatedPublisherResponse>, ICache
 
         public async Task<CreatedPublisherResponse> Handle(CreatePublisherCommand request, CancellationToken cancellationToken)
         {
+            await _publisherBusinessRules.PublisherShouldBeNotExists(request.Name);
             Publisher publisher = _mapper.Map<Publisher>(request);
 
             await _publisherRepository.AddAsync(publisher);

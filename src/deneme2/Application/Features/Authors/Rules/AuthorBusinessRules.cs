@@ -4,6 +4,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using Application.Features.Books.Constants;
 
 namespace Application.Features.Authors.Rules;
 
@@ -29,7 +30,12 @@ public class AuthorBusinessRules : BaseBusinessRules
         if (author == null)
             await throwBusinessException(AuthorsBusinessMessages.AuthorNotExists);
     }
-
+    public async Task AuthorShouldBeNotExists(string authorName)
+    {
+        bool doesExists = await _authorRepository.AnyAsync(predicate: u => u.Name == authorName);
+        if (doesExists)
+            await throwBusinessException(AuthorsBusinessMessages.AuthorAlreadyExist);
+    }
     public async Task AuthorIdShouldExistWhenSelected(Guid id, CancellationToken cancellationToken)
     {
         Author? author = await _authorRepository.GetAsync(

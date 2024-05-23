@@ -34,6 +34,7 @@ public class CreateAuthorCommand : IRequest<CreatedAuthorResponse>, ICacheRemove
 
         public async Task<CreatedAuthorResponse> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
+            await _authorBusinessRules.AuthorShouldBeNotExists(request.Name);
             Author author = _mapper.Map<Author>(request);
 
             await _authorRepository.AddAsync(author);

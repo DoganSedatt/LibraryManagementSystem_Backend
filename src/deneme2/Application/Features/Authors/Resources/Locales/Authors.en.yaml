@@ -1,1 +1,2 @@
 AuthorNotExists: "Author don't exists."
+AuthorAlreadyExist: "Author Already Exist"

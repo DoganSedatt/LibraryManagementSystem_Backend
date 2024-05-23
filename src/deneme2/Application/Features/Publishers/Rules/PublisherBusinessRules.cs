@@ -4,6 +4,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using Application.Features.Categories.Constants;
 
 namespace Application.Features.Publishers.Rules;
 
@@ -30,6 +31,12 @@ public class PublisherBusinessRules : BaseBusinessRules
             await throwBusinessException(PublishersBusinessMessages.PublisherNotExists);
     }
 
+    public async Task PublisherShouldBeNotExists(string publisherName)
+    {
+        bool doesExists = await _publisherRepository.AnyAsync(predicate: u => u.Name == publisherName);
+        if (doesExists)
+            await throwBusinessException(PublishersBusinessMessages.PublisherAlreadyExist);
+    }
     public async Task PublisherIdShouldExistWhenSelected(Guid id, CancellationToken cancellationToken)
     {
         Publisher? publisher = await _publisherRepository.GetAsync(
