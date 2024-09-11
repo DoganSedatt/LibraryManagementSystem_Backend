@@ -9,6 +9,7 @@
 - Entity Framework  
 - AutoMapper  
 
+## Proje Detayı
 
 - ASP.NET Core ve Angular ile modern web uygulaması geliştirme 
 - CQRS ve Mediator gibi patternler ile aktif çalışma
